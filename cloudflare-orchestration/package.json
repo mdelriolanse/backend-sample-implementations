@@ -1,23 +1,16 @@
 {
-  "name": "cloudflare-orchestration",
+  "name": "mock-origin",
   "version": "1.0.0",
-  "description": "",
-  "main": "build/worker.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npx wrangler dev",
-    "publish": "npx wrangler publish",
-    "type-check": "tsc --noEmit --project tsconfig.json",
-    "build": "npx esbuild ./origin-mock.ts --bundle --outfile=build/worker.js"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "description": "Mock origin worker",
   "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "type-check": "tsc --noEmit"
+  },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20251221.0",
-    "@cloudflare/wrangler": "^1.21.0",
-    "esbuild": "^0.27.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "wrangler": "^3.0.0"
   }
 }

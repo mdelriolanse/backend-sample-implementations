@@ -1,31 +1,33 @@
-import { Request } from '@cloudflare/workers-types';
+import type { Request } from '@cloudflare/workers-types';
 
 
 export type Version = 'v1' | 'v2';
 
-export default {
-    async fetch(request: Request): Promise<Response> {
-        const url: URL = new URL(request.url);
+addEventListener('fetch', (event: any) => {
+    event.respondWith(handleRequest(event.request));
+});
 
-        const CURRENT_DEPLOYED_VERSION: Version = 'v1';
+async function handleRequest(request: Request): Promise<Response> {
+    const url: URL = new URL(request.url);
 
-        const forceVersion: Version | null = request.headers.get('X-Force-Version') as Version;
-        const versionToServe: Version = forceVersion ?? CURRENT_DEPLOYED_VERSION;
+    const CURRENT_DEPLOYED_VERSION: Version = 'v1';
 
-        const data = versionToServe === 'v1' ? V1_DATA : V2_DATA;
+    const forceVersion: Version | null = request.headers.get('X-Force-Version') as Version;
+    const versionToServe: Version = forceVersion ?? CURRENT_DEPLOYED_VERSION;
 
-        const pageData = data[url.pathname as keyof typeof data];
+    const data = versionToServe === 'v1' ? V1_DATA : V2_DATA;
 
-        if (!pageData) {return new Response('Not Found', { status: 404 })};
+    const pageData = data[url.pathname as keyof typeof data];
 
-        return new Response(JSON.stringify(pageData), {
-            headers: {
-                'Content-Type': 'application/json',
-                'X-Version': versionToServe
-            }
-        });
+    if (!pageData) { return new Response('Not Found', { status: 404 }) };
 
-    }
+    return new Response(JSON.stringify(pageData), {
+        headers: {
+            'Content-Type': 'application/json',
+            'X-Version': versionToServe
+        }
+    });
+
 }
 
 const V1_DATA = {

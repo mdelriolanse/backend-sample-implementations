@@ -1,0 +1,7 @@
+{
+    "name": "mock-origin",
+    "main": "src/mock-origin.ts",
+    "compatibility_date": "2025-07-18",
+    "account_id": "7f05764206ee5f5e48e6296a4d92ad73",
+    "workers_dev": true
+}
