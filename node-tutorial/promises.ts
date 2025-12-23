@@ -2,11 +2,17 @@ import { readFile } from 'fs';
 import { readFile as readFilePromises } from 'fs/promises';
 
 // Type definitions for better TypeScript support
-interface FileReadResult {
-    success: boolean;
-    data?: string;
-    error?: Error;
-}
+type FileReadResultData = {
+    success: true;
+    data: string;
+};
+
+type FileReadResultError = {
+    success: false;
+    error: Error;
+};
+
+type FileReadResult = FileReadResultData | FileReadResultError;
 
 type FileReadCallback = (result: FileReadResult) => void;
 
@@ -77,14 +83,14 @@ async function hello(): Promise<void> {
  */
 function helloWithCallbacks(): void {
     readFileWithCallbacks('./hello.txt', (result: FileReadResult) => {
-        if (result.success && result.data) {
+        if (result.success) {
             console.log('File content (callback):', result.data);
 
             // Process the content
             const lines = result.data.split('\n');
             console.log(`File has ${lines.length} lines`);
         } else {
-            console.error('Failed to read file with callbacks:', result.error?.message);
+            console.error('Failed to read file with callbacks:', result.error.message);
             console.log('Please check that hello.txt exists and is readable');
         }
     });
