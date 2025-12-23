@@ -8,9 +8,10 @@
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
-    "target": "esnext",
-    // For nodejs:
-    // "lib": ["esnext"],
+    "moduleResolution": "nodenext",
+    "target": "es2020",
+    // For Cloudflare Workers (Web APIs + ES features):
+    "lib": ["esnext", "es2020", "webworker"],
     // "types": ["node"],
     // and npm install -D @types/node
 
