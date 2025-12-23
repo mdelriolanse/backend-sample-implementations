@@ -1,0 +1,15 @@
+name = "cloudflare-orchestration"
+type = "javascript"
+route = ''
+zone_id = ''
+account_id='7f05764206ee5f5e48e6296a4d92ad73'
+usage_model = ''
+compatibility_flags = []
+workers_dev = true
+compatibility_date = "2025-12-22"
+
+[build]
+command = "npm run build"
+
+[build.upload]
+format = "service-worker"
